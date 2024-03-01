@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "package": "myshampooisdrunk.weapons_api.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "EntityMixin",
+    "ItemMixin",
+    "PlayerAdvancementTrackerMixin",
+    "PlayerEntityMixin",
+    "PlayerEntityMixin_customItemCooldowns"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+	}
+}
