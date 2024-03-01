@@ -45,10 +45,6 @@ public abstract class AbstractCustomItem{
     public void onUse(World world, PlayerEntity user, Hand hand, CallbackInfoReturnable cir){
     }
     public void onAttack(Entity target, PlayerEntity attacker, CallbackInfo ci){
-<<<<<<< HEAD
-=======
-
->>>>>>> 8e604ee (polishing things)
     }
     public void onSneak(boolean sneaking, PlayerEntity player, CallbackInfo ci){
     }
@@ -63,7 +59,6 @@ public abstract class AbstractCustomItem{
     public void onEntityInteraction(PlayerEntity user, Entity entity, Hand hand, CallbackInfoReturnable<ActionResult> cir){
     }
     public void onJump(PlayerEntity p, CallbackInfo ci){
-
     }
 
 

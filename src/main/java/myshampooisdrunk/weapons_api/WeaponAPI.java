@@ -26,28 +26,8 @@ public class WeaponAPI implements ModInitializer {
 	public static Map<Item,Integer> ITEM_COUNT = new HashMap<>();
 	public static Map<Identifier, Pair<CraftingRecipe,AbstractCustomItem>> CUSTOM_RECIPES = new HashMap<>();
 	public static Map<Identifier,Triple<Identifier,Identifier,Identifier>> RECIPE_IDS = new HashMap<>();
-<<<<<<< HEAD
-	
+
 	public static void initializeRecipes(){
-=======
-	@Override
-	public void onInitialize() {
-		/*AbstractCustomItem bbbbbbbbbbbbbbbbbb = new GoofySillyGoofyItem();
-		AbstractCustomItem bbbbbbbbbbbbbbbbbb2 = new HopefullyThisItemWorks();
-		CustomItemRegistry.registerItem(bbbbbbbbbbbbbbbbbb);
-		CustomItemRegistry.registerItem(bbbbbbbbbbbbbbbbbb2);
-		CustomItemRegistry.registerRecipe(new ShapelessRecipe("", CraftingRecipeCategory.MISC,
-				bbbbbbbbbbbbbbbbbb.create(),
-				DefaultedList.copyOf(Ingredient.EMPTY,Ingredient.ofItems(Items.STONE),Ingredient.ofItems(Items.STONE))
-		),bbbbbbbbbbbbbbbbbb.getIdentifier(),bbbbbbbbbbbbbbbbbb);
-		CustomItemRegistry.registerRecipe(new ShapelessRecipe("", CraftingRecipeCategory.MISC,
-				bbbbbbbbbbbbbbbbbb2.create(),
-				DefaultedList.copyOf(Ingredient.EMPTY,Ingredient.ofItems(Items.DEEPSLATE),Ingredient.ofItems(Items.DEEPSLATE))
-		),bbbbbbbbbbbbbbbbbb2.getIdentifier(),bbbbbbbbbbbbbbbbbb2);
-		
-		CustomItemRegistry.addToGroup(bbbbbbbbbbbbbbbbbb2, ItemGroups.COMBAT);
-		CustomItemRegistry.addToGroup(bbbbbbbbbbbbbbbbbb, ItemGroups.COMBAT);*/
->>>>>>> 8e604ee (polishing things)
 		for(Identifier id : CUSTOM_RECIPES.keySet()){
 			RECIPE_IDS.put(id,Triple.of(
 					new Identifier(id.getNamespace(),id.getPath() + "_recipe"),
@@ -55,7 +35,6 @@ public class WeaponAPI implements ModInitializer {
 					new Identifier(id.getNamespace(),id.getPath() + "_recipe_advancement")
 			));
 		}
-<<<<<<< HEAD
 	}
 	
 	@Override
@@ -76,7 +55,5 @@ public class WeaponAPI implements ModInitializer {
 //		CustomItemRegistry.addToGroup(bbbbbbbbbbbbbbbbbb, ItemGroups.COMBAT);
 //
 //		initializeRecipes();
-=======
->>>>>>> 8e604ee (polishing things)
 	}
 }
