@@ -17,6 +17,8 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.MutableText;
+import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
@@ -54,5 +56,14 @@ public class GoofySillyGoofyItem extends AbstractCustomItem {
             player.sendMessage(Text.of(create().getName().getString()+ " still has " +
                     (int)(0.95+((CustomItemCooldownManagerI) player).getCustomItemCooldownManager().getCooldownProgress(this,0)*5f) + " second(s) left." ),true);
         }
+    }
+    @Override
+    public ItemStack create(){
+        MutableText t = (key != null ? Text.translatable(key) : (MutableText) item.getName()).setStyle(Style.EMPTY.withItalic(false));
+        ItemStack ret = new ItemStack(item).setCustomName(t);//new Formatting("ITALIC",'o',false)
+        NbtCompound name = ret.getOrCreateSubNbt("display");
+        name.putString("Name",Text.Serialization.toJsonString(t));//.replace("{\"text\":","{\"italic\":false,\"text\":")
+        ret.getOrCreateNbt().putInt("CustomModelData",id);
+        return ret;
     }
 }

@@ -1,6 +1,7 @@
 package myshampooisdrunk.weapons_api.register;
 
 import myshampooisdrunk.weapons_api.WeaponAPI;
+import myshampooisdrunk.weapons_api.enchantment.AbstractCustomEnchantment;
 import myshampooisdrunk.weapons_api.weapon.AbstractCustomItem;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.item.Item;
@@ -23,12 +24,20 @@ public class CustomItemRegistry {
         ItemGroupEvents.modifyEntriesEvent(g).register(content -> {
             content.add(item.create());
         });
-    }public static void addToGroup(AbstractCustomItem item, RegistryKey<ItemGroup> g, ItemStack after){
+    }
+    public static void addToGroup(AbstractCustomItem item, RegistryKey<ItemGroup> g, ItemStack after){
         ItemGroupEvents.modifyEntriesEvent(g).register(content -> {
             content.addAfter(after, item.create());
         });
     }
     public static void registerRecipe(CraftingRecipe r, Identifier id, AbstractCustomItem item){
         WeaponAPI.CUSTOM_RECIPES.put(id, new Pair<>(r,item));
+    }
+    public static void registerCustomEnchantment(AbstractCustomEnchantment e){
+        WeaponAPI.ENCHANTMENTS.put(e.getId(),e);
+    }
+
+    public static void registerEmptyRecipe(Identifier id, AbstractCustomItem item){
+        registerRecipe(null,id,item);
     }
 }

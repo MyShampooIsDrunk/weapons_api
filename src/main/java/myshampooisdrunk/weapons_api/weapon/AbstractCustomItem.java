@@ -20,10 +20,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import javax.security.auth.callback.Callback;
 
 public abstract class AbstractCustomItem{
-    private final String key;
-    private final Item item;
-    private final int id;
-    private final Identifier identifier;
+    protected final String key;
+    protected final Item item;
+    protected final int id;
+    protected final Identifier identifier;
     public AbstractCustomItem(Item item, Identifier identifier) {
         this(item,identifier,null);
     }

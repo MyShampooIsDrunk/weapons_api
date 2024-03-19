@@ -1,6 +1,7 @@
 package myshampooisdrunk.weapons_api.mixin;
 
 import myshampooisdrunk.weapons_api.WeaponAPI;
+import myshampooisdrunk.weapons_api.enchantment.CustomEnchantmentHelper;
 import myshampooisdrunk.weapons_api.weapon.AbstractCustomItem;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.StackReference;
@@ -27,6 +28,9 @@ ItemMixin{
 	@Inject(at = @At("HEAD"), method = "use")
 	private void useItem(World world, PlayerEntity user, Hand hand, CallbackInfoReturnable<TypedActionResult<ItemStack>> cir) {
 		ItemStack item = user.getStackInHand(hand);
+		CustomEnchantmentHelper.getEnchantmentList(item).forEach((enchant, level)->{
+			enchant.onUse(world, user, hand,level,cir);
+		});
 		if(WeaponAPI.ITEMS.containsKey(item.getItem())){
 			for(AbstractCustomItem custom : WeaponAPI.ITEMS.get(item.getItem())){
 				if(custom.getItem().equals(item.getItem()) && item.getOrCreateNbt().getInt("CustomModelData") == custom.getId()){

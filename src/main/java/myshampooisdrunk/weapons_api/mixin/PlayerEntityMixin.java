@@ -1,6 +1,7 @@
 package myshampooisdrunk.weapons_api.mixin;
 
 import myshampooisdrunk.weapons_api.WeaponAPI;
+import myshampooisdrunk.weapons_api.enchantment.CustomEnchantmentHelper;
 import myshampooisdrunk.weapons_api.weapon.AbstractCustomItem;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -29,6 +30,9 @@ public abstract class PlayerEntityMixin extends LivingEntity {
     private void attack(Entity target, CallbackInfo ci) {
         PlayerEntity user = (PlayerEntity)(Object)this;
         ItemStack item = user.getStackInHand(Hand.MAIN_HAND);
+        CustomEnchantmentHelper.getEnchantmentList(item).forEach((enchant, level)->{
+            enchant.onAttack(target, user,level,ci);
+        });
         if(WeaponAPI.ITEMS.containsKey(item.getItem())) {
             for (AbstractCustomItem custom : WeaponAPI.ITEMS.get(item.getItem())) {
                 if (custom.getItem().equals(item.getItem()) && item.getOrCreateNbt().getInt("CustomModelData") == custom.getId()) {
@@ -40,6 +44,9 @@ public abstract class PlayerEntityMixin extends LivingEntity {
     }
     @Inject(at=@At("HEAD"),method="dropItem(Lnet/minecraft/item/ItemStack;ZZ)Lnet/minecraft/entity/ItemEntity;")
     private void dropItem(ItemStack stack, boolean throwRandomly, boolean retainOwnership, CallbackInfoReturnable<ItemEntity> cir){
+        CustomEnchantmentHelper.getEnchantmentList(stack).forEach((enchant, level)->{
+            enchant.onDrop((PlayerEntity) (Object) this, stack,throwRandomly,retainOwnership,level,cir);
+        });
         if(WeaponAPI.ITEMS.containsKey(stack.getItem())) {
             PlayerEntity user = (PlayerEntity) (Object) this;
             for (AbstractCustomItem custom : WeaponAPI.ITEMS.get(stack.getItem())) {
@@ -55,6 +62,9 @@ public abstract class PlayerEntityMixin extends LivingEntity {
         if(this.isSneaking()){
             PlayerEntity user = (PlayerEntity)(Object)this;
             ItemStack item = user.getStackInHand(Hand.MAIN_HAND);
+            CustomEnchantmentHelper.getEnchantmentList(item).forEach((enchant, level)->{
+                enchant.whileSneak((PlayerEntity) (Object) this, level, ci);
+            });
             if(WeaponAPI.ITEMS.containsKey(item.getItem())) {
                 for (AbstractCustomItem custom : WeaponAPI.ITEMS.get(item.getItem())) {
                     if (custom.getItem().equals(item.getItem()) && item.getOrCreateNbt().getInt("CustomModelData") == custom.getId()) {
@@ -69,6 +79,9 @@ public abstract class PlayerEntityMixin extends LivingEntity {
     public void onInteract(Entity entity, Hand hand, CallbackInfoReturnable<ActionResult> cir){
         PlayerEntity user = (PlayerEntity)(Object)this;
         ItemStack item = user.getStackInHand(Hand.MAIN_HAND);
+        CustomEnchantmentHelper.getEnchantmentList(item).forEach((enchant, level)->{
+            enchant.onInteract(user, entity,hand,level, cir);
+        });
         if(WeaponAPI.ITEMS.containsKey(item.getItem())) {
             for (AbstractCustomItem custom : WeaponAPI.ITEMS.get(item.getItem())) {
                 if (custom.getItem().equals(item.getItem()) && item.getOrCreateNbt().getInt("CustomModelData") == custom.getId()) {
@@ -79,9 +92,12 @@ public abstract class PlayerEntityMixin extends LivingEntity {
         }
     }
     @Inject(at=@At("HEAD"),method="jump")
-    private void attack(CallbackInfo ci) {
+    private void jump(CallbackInfo ci) {
         PlayerEntity user = (PlayerEntity)(Object)this;
         ItemStack item = user.getStackInHand(Hand.MAIN_HAND);
+        CustomEnchantmentHelper.getEnchantmentList(item).forEach((enchant, level)->{
+            enchant.onJump(user, level, ci);
+        });
         if(WeaponAPI.ITEMS.containsKey(item.getItem())) {
             for (AbstractCustomItem custom : WeaponAPI.ITEMS.get(item.getItem())) {
                 if (custom.getItem().equals(item.getItem()) && item.getOrCreateNbt().getInt("CustomModelData") == custom.getId()) {
